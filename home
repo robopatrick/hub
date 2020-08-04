@@ -1,0 +1,127 @@
+#Patrick Moran
+BASIC CONCEPTS OF ROBOT FRAMEWORK
+What is Robot Framework, and how can it be used for Robotic Process Automation?
+Robot Framework is an open-source set of tools that can be used to test and automate software processes. Its origins are within Nokia, and it is currently supported by the non-profit Robot Framework Foundation.
+
+Robot Framework is used extensively as a test tool for acceptance test-driven development (ATDD) in a variety of applications, and increasingly also for Robotic Process Automation.
+
+The Robocorp Suite provides tools to write, execute and orchestrate software robots that are powered by Robot Framework to be used in RPA, so understanding the basics is fundamental for any Software Robot Developer.
+
+If you are completely new to Robot Framework and its use in RPA, we recommend taking our Beginners' course, where we build a robot from start to finish. This article will provide only a very quick introduction to the main concepts.
+
+What does Robot Framework code look like?
+Robot Framework code aims to be easily readable so that even an untrained eye can understand what the code does.
+
+Take this example, taken from our Beginners' course:
+
+
+Copy
+*** Settings ***
+Documentation     Robot to enter weekly sales data into the RobotSpareBin Industries Intranet.
+Library           RPA.Browser
+
+*** Variables ***
+${URL}=    https://robotsparebinindustries.com/
+
+*** Keywords ***
+Open The Intranet Website
+    Open Available Browser    ${URL}
+
+*** Keywords ***
+Log In
+    Input Text    username    maria
+    Input Password    password    thoushallnotpass
+    Submit Form
+
+*** Tasks ***
+Open the intranet site and log in
+    Open The Intranet Website
+    Log In
+You probably can figure out that this brief script executes a robot that opens a website and logs into it using the credentials for a user called "maria".
+
+Let's have a quick look at how this code is structured into its main parts and the syntax that it uses.
+
+What are Keywords?
+Think of keywords as functions in other programming languages. Keywords are operations that your robot can execute to accomplish various tasks, and are the foundation of any robot script. Keywords can be reused, and they can be composed, which means that you can create keywords by calling other keywords.
+
+Let's take this part of the script as an example:
+
+
+Copy
+*** Keywords ***
+Open The Intranet Website
+    Open Available Browser    https://robotsparebinindustries.com/
+In this code, Open The Intranet Website is a keyword. You will notice that the next line is indented by four spaces: this is very important and required in the tabular syntax that Robot Framework uses. The indentation tells the framework that Open Available Browser, also a keyword, is contained by the Open The Intranet Website keyword.
+
+Open The Intranet Website does not require any argument to be passed to it, but the contained keyword Open Available Browser does need to know which page to open the browser to. This is called an argument. Keywords can require one or more arguments. In our case, the argument is the URL of the site to be opened.
+
+Note: Indentation is also required between a keyword and its arguments, and between the arguments themselves.
+
+What are Libraries?
+Robot Framework itself is not built to interact with a specific system and does not have a strictly defined list of functionalities. Instead, it is built to be easily extended to work with any possible target system. These extensions to the framework are called libraries.
+
+The framework itself ships with standard libraries, used to handle common cases. There are many libraries available to cover a variety of situations and systems.
+
+Robocorp maintains a set of libraries that are built specifically to support RPA cases. These libraries form the RPA Framework.
+
+How do I add a library?
+Except for the standard set, libraries come in packages that you have to add before you can use them in your robot. For example, adding the rpaframework package makes all the RPA Framework libraries available to your robot script.
+
+Once you have added a library, you can reference it in the *** Settings *** section of your script, as we did in our example:
+
+
+Copy
+*** Settings ***
+Documentation     Robot to enter weekly sales data into the RobotSpareBin Industries Intranet.
+Library           RPA.Browser
+Keywords are organized in libraries. When you add a library, you get access to all the keywords it contains. In our example:
+
+
+Copy
+*** Keywords ***
+Open The Intranet Website
+    Open Available Browser    https://robotsparebinindustries.com/
+Open Available Browser is, in fact, a keyword that is provided by the RPA.Browser library that we have imported in the *** Settings *** section at the top of the script.
+
+To add new packages you typically make use of Python's package managers, such as pip or conda.
+
+What if I don't find a library that does what I need?
+Under the hood, libraries are written in the Python or, more rarely, Java programming languages, and adding a new library is quite fast and easy to do. If you don't find a library that matches your use case, you can write one, or hire someone that can do it for you. If you do, consider the option of releasing it as open-source software, so that the community can learn from it and improve it!
+
+Also, if you think your case is not covered by the existing RPA Framework libraries, let us know! We are always looking to expand the framework and add more functionality.
+
+What are Tasks?
+Keywords are the building blocks of robots, and libraries will get you more keywords, but a robot does nothing if you don't assign it a Task.
+
+In our example:
+
+
+Copy
+*** Tasks ***
+Open the intranet site and log in
+    Open The Intranet Website
+    Log In
+Open the intranet site and log in is the task that our robot will do when we run it. A task is a set of keywords that are executed one after the other. In our case, the robot will run the Open The Intranet Website keyword, and then the Log In keyword.
+
+What are Variables
+Instead of writing directly the value of the URL of the website we want the robot to open, we can put that value in a [variable](<https://en.wikipedia.org/wiki/Variable_(computer_science)), like this:
+
+
+Copy
+*** Variables ***
+${URL}=    https://robotsparebinindustries.com/
+We can then refer to the URL anywhere else in the script by calling the variable:
+
+
+Copy
+*** Keywords ***
+Open The Intranet Website
+    Open Available Browser    ${URL}
+Keep reading!
+You learned about the basics of Robot Framework for RPA. Here's how you can continue from here:
+
+If you haven't already, follow our Quickstart guide to get up and running with the Robocorp Suite!
+Take our Beginner's course to build a robot from start to finish, no previous knowledge needed (and now that you read this article, you already have an advantage! 🙂).
+Join our developer Slack environment to keep in touch, discuss, and collaborate with other users! To receive your invitation, just click on the Join our developer Slack link in your user menu in Robocloud.
+Read the Robot Framework official documentation.
+Visit the Robot Framework website for more documentation, resources, examples, and to interact with the Robot Framework user community.
